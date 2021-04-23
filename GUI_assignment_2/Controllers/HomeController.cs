@@ -140,8 +140,23 @@ namespace GUI_assignment_2.Controllers
 
             return View(checkedIn);
         }
-
         #endregion //restaurant
+
+        #region Reception
+
+        //Authorization fra identy halløj
+        public async Task<IActionResult> Reception([Bind("")] OrderModel checkedIn)//Mangler det der skal bindes
+        {
+            return View(checkedIn);
+
+            if (ModelState.IsValid)
+            {
+                _db.Add(checkedIn);//ved ikke om det her er rigtigt
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(HomeController.Index)); //Tror jeg?
+            }
+        }
+        #endregion //Reception
         #endregion //ACTION BABY
 
 

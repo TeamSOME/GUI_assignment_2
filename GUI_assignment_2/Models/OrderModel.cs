@@ -17,7 +17,7 @@ namespace GUI_assignment_2.Models
         public DateTime Date { get; set; }
         public int Adults { get; set; } = 0;
         public int Kids { get; set; } = 0;
-        public int CheckedInAdults { get; set; } = 0;//Bindes til Restaurant
+        public int CheckedInAdults { get; set; } = 0;//Bindes til Restaurant eller til reception?
         public int CheckedInKids { get; set; } = 0;//Bindes til Restaurant
 
     }
