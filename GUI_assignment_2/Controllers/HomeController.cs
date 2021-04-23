@@ -153,7 +153,7 @@ namespace GUI_assignment_2.Controllers
             {
                 _db.Add(checkedIn);//ved ikke om det her er rigtigt
                 await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(HomeController.Index)); //Tror jeg?
+                return RedirectToAction(nameof(HomeController.Reception)); //Tror jeg?
             }
         }
         #endregion //Reception
