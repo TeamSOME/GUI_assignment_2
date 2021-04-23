@@ -135,6 +135,7 @@ namespace GUI_assignment_2.Controllers
             {
                 _db.Update(orderModel);
                 await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(HomeController.Index)); //Tror jeg?
             }
 
             return View(checkedIn);
