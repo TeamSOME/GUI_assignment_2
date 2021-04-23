@@ -14,6 +14,6 @@ namespace GUI_assignment_2.Data
             : base(options)
         {
         }
-        //public DbSet<CheckedInModel> CheckedInModels { get; set; }
+       public DbSet<OrderModel> Order { get; set; }
     }
 }
