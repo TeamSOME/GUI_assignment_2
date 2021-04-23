@@ -123,7 +123,22 @@ namespace GUI_assignment_2.Controllers
         }
 
         //NEED AUTHORIZATION FRA IDENTITY
+        //Validation
+        public async Task<IActionResult> Restaurant([Bind("RoomNumber, CheckedInAdults, CheckedInKids")] OrderModel checkedIn)
+        {
+            OrderModel orderModel;
+            orderModel = await _db.Order.Where(x => x.RoomNumber == checkedIn.RoomNumber && x.Date == DateTime.Now.Date).FirstAsync();
+            orderModel.CheckedInAdults = checkedIn.CheckedInAdults;
+            orderModel.CheckedInKids = checkedIn.CheckedInKids;
 
+            if (ModelState.IsValid)
+            {
+                _db.Update(orderModel);
+                await _db.SaveChangesAsync();
+            }
+
+            return View(checkedIn);
+        }
 
         #endregion //restaurant
         #endregion //ACTION BABY

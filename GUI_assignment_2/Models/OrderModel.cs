@@ -12,13 +12,13 @@ namespace GUI_assignment_2.Models
         public int OrderModelId { get; set; }
         [Required]
         [Display(Name = "Room Number")]
-        public int RoomNumber { get; set; }
+        public int RoomNumber { get; set; }//Bindes til Restaurant
         [Required]
         public DateTime Date { get; set; }
         public int Adults { get; set; } = 0;
         public int Kids { get; set; } = 0;
-        public int CheckedInAdults { get; set; } = 0;
-        public int CheckedInKids { get; set; } = 0;
+        public int CheckedInAdults { get; set; } = 0;//Bindes til Restaurant
+        public int CheckedInKids { get; set; } = 0;//Bindes til Restaurant
 
     }
 }
