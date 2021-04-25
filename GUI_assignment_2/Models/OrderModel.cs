@@ -14,11 +14,11 @@ namespace GUI_assignment_2.Models
         [Display(Name = "Room Number")]
         public int RoomNumber { get; set; }//Bindes til Restaurant
         [Required]
-        public DateTime Date { get; set; }
-        public int Adults { get; set; } = 0;
-        public int Kids { get; set; } = 0;
-        public int CheckedInAdults { get; set; } = 0;//Bindes til Restaurant eller til reception?
-        public int CheckedInKids { get; set; } = 0;//Bindes til Restaurant
+        public DateTime Date { get; set; }//Bindes til Reception
+        public int Adults { get; set; } = 0; //Bindes til Reception
+        public int Kids { get; set; } = 0; //Bindes til Reception
+        public int CheckedInAdults { get; set; } = 0;//Bindes til Restaurant og til reception
+        public int CheckedInKids { get; set; } = 0;//Bindes til Restaurant og til reception
 
     }
 }

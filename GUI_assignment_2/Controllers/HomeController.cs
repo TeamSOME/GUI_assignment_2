@@ -145,9 +145,9 @@ namespace GUI_assignment_2.Controllers
         #region Reception
 
         //Authorization fra identy halløj
-        public async Task<IActionResult> Reception([Bind("")] OrderModel checkedIn)//Mangler det der skal bindes
+        public async Task<IActionResult> Reception([Bind("RoomNumber,Date,Adults,Kids,CheckedInAdults,CheckedInKids")] OrderModel checkedIn)//Mangler det der skal bindes
         {
-            return View(checkedIn);
+            
 
             if (ModelState.IsValid)
             {
@@ -155,6 +155,7 @@ namespace GUI_assignment_2.Controllers
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(HomeController.Reception)); //Tror jeg?
             }
+            return View(checkedIn);
         }
         #endregion //Reception
         #endregion //ACTION BABY
