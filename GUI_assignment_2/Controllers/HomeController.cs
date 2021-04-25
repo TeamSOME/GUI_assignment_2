@@ -25,8 +25,7 @@ namespace GUI_assignment_2.Controllers
             _db = db;
         }
 
-        /*PAGES*/
-
+        #region PAGES
         public IActionResult Index()
         {
             return View();
@@ -52,19 +51,117 @@ namespace GUI_assignment_2.Controllers
             return View();
         }
 
-
-        /*ACTION RESULTS*/
-
-        //public async Task<IActionResult> Kitchen(string id)
-        //{
-            
-        //}
+        #endregion
 
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        
+        #region ACTION------------------------------------------------------------------------------------------
+        
+        #region KITCHEN??? RESTAURANT???
+        public async Task<IActionResult> Kitchen(string id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            DateTime date = Convert.ToDateTime(id);
+            var Order = await _db.Order.Where(m => m.Date.Date == date.Date).ToListAsync();
+            var totalAdultsDate = 0;
+            var totalKidsDate = 0;
+            //var total = 0;
+            var checkedInAdults = 0;
+            var checkedInKids = 0;
+            //var remainingAdults = 0;
+            //var remainingKids = 0;
+            //var remainingTotal = 0;
+
+
+            var KitchenModel = new KitchenModel //sættes til lokal variabel
+            {
+                TotalAdultsDate = totalAdultsDate,
+                TotalKidsDate = totalKidsDate,
+                Total = totalAdultsDate+totalKidsDate,
+                CheckedInAdults = checkedInAdults,
+                CheckedInKids = checkedInKids,
+                RemainingAdults = totalAdultsDate- checkedInAdults,
+                RemainingKids = totalKidsDate- checkedInKids,
+                RemainingTotal = (totalKidsDate - checkedInKids)+(totalAdultsDate - checkedInAdults),
+                Date = date.ToString("g"),
+            };
+
+            foreach (var order in Order) //For hver order ligges det op
+            {
+                totalAdultsDate += order.Adults;
+                checkedInAdults += order.CheckedInAdults;
+                totalKidsDate += order.Kids;
+                checkedInKids += order.CheckedInKids;
+
+            }
+
+            if (Order == null)
+            { return NotFound(); }
+
+            return View(KitchenModel);
         }
-    }
-}
+
+        #endregion //kitchen
+
+        #region RESTAURANT
+
+        //NEED AUTHORIZATION FRA IDENTITY
+
+        public async Task<IActionResult> Restaurant(string id)
+        {
+            var Order = await _db.Order.FindAsync(id);
+
+            if (id == null)
+            {
+                return View(new OrderModel());
+            }
+            if (Order == null)
+            {
+                return NotFound();
+            }
+
+            return View(Order);
+        }
+
+        //NEED AUTHORIZATION FRA IDENTITY
+        //Validation
+        public async Task<IActionResult> Restaurant([Bind("RoomNumber, CheckedInAdults, CheckedInKids")] OrderModel checkedIn)
+        {
+            OrderModel orderModel;
+            orderModel = await _db.Order.Where(x => x.RoomNumber == checkedIn.RoomNumber && x.Date == DateTime.Now.Date).FirstAsync();
+            orderModel.CheckedInAdults = checkedIn.CheckedInAdults;
+            orderModel.CheckedInKids = checkedIn.CheckedInKids;
+
+            if (ModelState.IsValid)
+            {
+                _db.Update(orderModel);
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(HomeController.Index)); //Tror jeg?
+            }
+
+            return View(checkedIn);
+        }
+        #endregion //restaurant
+
+        #region Reception
+
+        //Authorization fra identy halløj
+        public async Task<IActionResult> Reception([Bind("RoomNumber,Date,Adults,Kids,CheckedInAdults,CheckedInKids")] OrderModel checkedIn)//Mangler det der skal bindes
+        {
+            
+
+            if (ModelState.IsValid)
+            {
+                _db.Add(checkedIn);//ved ikke om det her er rigtigt
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(HomeController.Reception)); //Tror jeg?
+            }
+            return View(checkedIn);
+        }
+        #endregion //Reception
+        #endregion //ACTION BABY
+
+
+
+
+    }//class
+}//namespace

@@ -15,6 +15,7 @@ namespace GUI_assignment_2.Data
         {
             Database.EnsureCreated();
         }
+       public DbSet<OrderModel> Order { get; set; }
         public DbSet<CheckedInModel> CheckedInModels { get; set; }
         public DbSet<KitchenModel> kitchenModels  { get; set; }
         public DbSet<OrderModel> orderModels { get; set; }
