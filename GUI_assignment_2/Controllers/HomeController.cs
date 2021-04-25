@@ -30,7 +30,7 @@ namespace GUI_assignment_2.Controllers
         {
             return View();
         }
-
+        [Authorize("Reception")]
         public IActionResult Reception()
         {
             return View();
@@ -40,7 +40,7 @@ namespace GUI_assignment_2.Controllers
         {
             return View();
         }
-
+        [Authorize("Restaurant")]
         public IActionResult Restaurant()
         {
             return View();
@@ -104,7 +104,7 @@ namespace GUI_assignment_2.Controllers
 
         #region RESTAURANT
 
-        //NEED AUTHORIZATION FRA IDENTITY
+        [Authorize("Restaurant")]
 
         public async Task<IActionResult> Restaurant(string id)
         {
@@ -122,7 +122,9 @@ namespace GUI_assignment_2.Controllers
             return View(Order);
         }
 
-        //NEED AUTHORIZATION FRA IDENTITY
+        [Authorize("Restaurant")]
+        [HttpPost]
+
         //Validation
         public async Task<IActionResult> Restaurant([Bind("RoomNumber, CheckedInAdults, CheckedInKids")] OrderModel checkedIn)
         {
@@ -144,7 +146,8 @@ namespace GUI_assignment_2.Controllers
 
         #region Reception
 
-        //Authorization fra identy halløj
+        [Authorize("Reception")]
+        [HttpPost]
         public async Task<IActionResult> Reception([Bind("RoomNumber,Date,Adults,Kids,CheckedInAdults,CheckedInKids")] OrderModel checkedIn)//Mangler det der skal bindes
         {
             
@@ -159,9 +162,6 @@ namespace GUI_assignment_2.Controllers
         }
         #endregion //Reception
         #endregion //ACTION BABY
-
-
-
 
     }//class
 }//namespace
