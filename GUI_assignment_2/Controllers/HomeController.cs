@@ -36,10 +36,10 @@ namespace GUI_assignment_2.Controllers
             return View();
         }
 
-        public IActionResult Kitchen()
-        {
-            return View();
-        }
+        //public IActionResult Kitchen()
+        //{
+        //    return View();
+        //}
         [Authorize("Restaurant")]
         public IActionResult Restaurant()
         {
@@ -61,7 +61,7 @@ namespace GUI_assignment_2.Controllers
         public async Task<IActionResult> Kitchen(string id)
         {
             DateTime date = Convert.ToDateTime(id);
-            var Order = await _db.Order.Where(m => m.Date.Date == date.Date).ToListAsync();
+            var OrderModel = await _db.OrderModels.Where(m => m.Date.Date == date.Date).ToListAsync();
             var totalAdultsDate = 0;
             var totalKidsDate = 0;
             //var total = 0;
@@ -85,16 +85,16 @@ namespace GUI_assignment_2.Controllers
                 Date = date.ToString("g"),
             };
 
-            foreach (var order in Order) //For hver order ligges det op
+            foreach (var OrderModels in OrderModel) //For hver order ligges det op
             {
-                totalAdultsDate += order.Adults;
-                checkedInAdults += order.CheckedInAdults;
-                totalKidsDate += order.Kids;
-                checkedInKids += order.CheckedInKids;
+                totalAdultsDate += OrderModels.Adults;
+                checkedInAdults += OrderModels.CheckedInAdults;
+                totalKidsDate += OrderModels.Kids;
+                checkedInKids += OrderModels.CheckedInKids;
 
             }
 
-            if (Order == null)
+            if (OrderModel == null)
             { return NotFound(); }
 
             return View(KitchenModel);
@@ -108,18 +108,18 @@ namespace GUI_assignment_2.Controllers
 
         public async Task<IActionResult> Restaurant(string id)
         {
-            var Order = await _db.Order.FindAsync(id);
+            var OrderModel = await _db.OrderModels.FindAsync(id);
 
             if (id == null)
             {
                 return View(new OrderModel());
             }
-            if (Order == null)
+            if (OrderModel == null)
             {
                 return NotFound();
             }
 
-            return View(Order);
+            return View(OrderModel);
         }
 
         [Authorize("Restaurant")]
@@ -128,14 +128,14 @@ namespace GUI_assignment_2.Controllers
         //Validation
         public async Task<IActionResult> Restaurant([Bind("RoomNumber, CheckedInAdults, CheckedInKids")] OrderModel checkedIn)
         {
-            OrderModel orderModel;
-            orderModel = await _db.Order.Where(x => x.RoomNumber == checkedIn.RoomNumber && x.Date == DateTime.Now.Date).FirstAsync();
-            orderModel.CheckedInAdults = checkedIn.CheckedInAdults;
-            orderModel.CheckedInKids = checkedIn.CheckedInKids;
+            OrderModel OrderModels;
+            OrderModels = await _db.OrderModels.Where(x => x.RoomNumber == checkedIn.RoomNumber && x.Date == DateTime.Now.Date).FirstAsync();
+            OrderModels.CheckedInAdults = checkedIn.CheckedInAdults;
+            OrderModels.CheckedInKids = checkedIn.CheckedInKids;
 
             if (ModelState.IsValid)
             {
-                _db.Update(orderModel);
+                _db.Update(OrderModels);
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(HomeController.Index)); //Tror jeg?
             }
