@@ -38,14 +38,29 @@ namespace GUI_assignment_2
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
-                options.Password.RequiredLength = 3;
+                options.Password.RequiredLength = 6;
                 options.Password.RequireDigit = false;
                 //options.Password.RequireNonAlphanumeric = false;
 
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddRazorPages();   
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Restaurant", policy => policy.RequireRole("Admin"));
+
+                options.AddPolicy("Kitchen", policy =>
+                    policy.RequireAssertion(context =>
+                                context.User.IsInRole("Admin")
+                                || context.User.IsInRole("Chef")));
+
+                options.AddPolicy("Reception", policy =>
+                    policy.RequireAssertion(context =>
+                                context.User.IsInRole("Admin")
+                                || context.User.IsInRole("Manager")
+                                || context.User.IsInRole("Receptionist")));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

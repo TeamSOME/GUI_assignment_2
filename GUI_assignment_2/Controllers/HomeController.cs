@@ -36,15 +36,16 @@ namespace GUI_assignment_2.Controllers
             return View();
         }
 
+        //[Authorize("Kitchen")]
         //public IActionResult Kitchen()
         //{
         //    return View();
         //}
-        [Authorize("Restaurant")]
-        public IActionResult Restaurant()
-        {
-            return View();
-        }
+        //[Authorize("Restaurant")]
+        //public IActionResult Restaurant()
+        //{
+        //    return View();
+        //}
 
         public IActionResult Login()
         {
@@ -54,10 +55,12 @@ namespace GUI_assignment_2.Controllers
         #endregion
 
 
-        
+
         #region ACTION------------------------------------------------------------------------------------------
-        
+
         #region KITCHEN??? RESTAURANT???
+        [Authorize("Kitchen")]
+        //[HttpPost]
         public async Task<IActionResult> Kitchen(string id)
         {
             DateTime date = Convert.ToDateTime(id);
