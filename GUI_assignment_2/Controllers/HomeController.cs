@@ -15,7 +15,7 @@ namespace GUI_assignment_2.Controllers
 {
     public class HomeController : Controller
     {
-
+        //[Authorize]
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
 

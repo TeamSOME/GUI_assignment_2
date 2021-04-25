@@ -13,7 +13,11 @@ namespace GUI_assignment_2.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
-        //public DbSet<CheckedInModel> CheckedInModels { get; set; }
+        public DbSet<CheckedInModel> CheckedInModels { get; set; }
+        public DbSet<KitchenModel> kitchenModels  { get; set; }
+        public DbSet<OrderModel> orderModels { get; set; }
+        
     }
 }

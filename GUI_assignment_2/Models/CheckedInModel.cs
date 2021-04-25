@@ -8,6 +8,7 @@ namespace GUI_assignment_2.Models
 {
     public class CheckedInModel
     {
+        public int CheckedInModelID { get; set; }
         public DateTime Date { get; set; }
         [Display(Name = "Room Number")]
         public int RoomNumber { get; set; }

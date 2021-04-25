@@ -8,6 +8,7 @@ namespace GUI_assignment_2.Models
 {
     public class KitchenModel
     {
+        public int KitchenModelID { get; set; }
         [Display(Name = "Total Adults for a chousen day")]
         public int TotalAdultsDate { get; set; }
         [Display(Name = "Total Kids for a chousen day")]
