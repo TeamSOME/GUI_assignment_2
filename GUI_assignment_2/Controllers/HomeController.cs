@@ -65,7 +65,7 @@ namespace GUI_assignment_2.Controllers
         public async Task<IActionResult> Kitchen(string id)
         {
             DateTime date = Convert.ToDateTime(id);
-            var OrderModel = await _db.OrderModels.Where(m => m.Date.Date == date.Date).ToListAsync();
+            var OrderModel = await _db.OrderModels.Where(x => x.Date.Date == date.Date).ToListAsync();
             var totalAdultsDate = 0;
             var totalKidsDate = 0;
             //var total = 0;
