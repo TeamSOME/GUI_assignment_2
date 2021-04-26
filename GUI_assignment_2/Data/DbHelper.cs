@@ -14,7 +14,35 @@ namespace GUI_assignment_2.Data
         {
             CreateReceptionUser(userManager);
             CreateRestaurantUser(userManager);
+            CreateKitchenUser(userManager);
         }
+
+        private async void CreateKitchenUser(UserManager<ApplicationUser> userManager)
+        {
+            const string receptionEmail = "waitert@baguettes.com";
+            const string password = "hej123.";
+
+            if (userManager.FindByNameAsync(receptionEmail).Result == null)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = receptionEmail,
+                    Email = receptionEmail
+
+                };
+                IdentityResult result = userManager.CreateAsync
+                    (user, password).Result;
+                if (result.Succeeded)
+                {
+                    var claim = new Claim("Waiter", "Yes");
+                    userManager.AddClaimAsync(user, claim).Wait();
+                    string token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    userManager.ConfirmEmailAsync(user, token).Wait();
+
+                }
+            }
+        }
+
         private async void CreateReceptionUser(UserManager<ApplicationUser> userManager)
         {
 
@@ -44,7 +72,7 @@ namespace GUI_assignment_2.Data
 
         public async void CreateRestaurantUser(UserManager<ApplicationUser> userManager)
         {
-            const string restaurantEmail = "chef@baguettes.com";
+            const string restaurantEmail = "admin@baguettes.com";
             const string password = "hej123.";
 
             if (userManager.FindByNameAsync(restaurantEmail).Result == null)
@@ -59,7 +87,7 @@ namespace GUI_assignment_2.Data
                     (user, password).Result;
                 if (result.Succeeded)
                 {
-                    var claim = new Claim("Chef", "Yes");
+                    var claim = new Claim("Admin", "Yes");
                     userManager.AddClaimAsync(user, claim).Wait();
                     string token = await userManager.GenerateEmailConfirmationTokenAsync(user);
                     userManager.ConfirmEmailAsync(user, token).Wait();

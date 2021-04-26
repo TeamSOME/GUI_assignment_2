@@ -52,16 +52,7 @@ namespace GUI_assignment_2
             {
                 options.AddPolicy("Restaurant", policy => policy.RequireClaim("Admin"));
 
-                //options.AddPolicy("Kitchen", policy =>
-                //    policy.RequireAssertion(context =>
-                //                context.User.IsInRole("Admin")
-                //                || context.User.IsInRole("Chef")));
-
-                //options.AddPolicy("Reception", policy =>
-                //    policy.RequireAssertion(context =>
-                //                context.User.IsInRole("Admin")
-                //                || context.User.IsInRole("Manager")
-                //                || context.User.IsInRole("Receptionist")));
+                
             });
 
             services.AddAuthorization(options =>
@@ -77,7 +68,7 @@ namespace GUI_assignment_2
                 options.AddPolicy(
                     "Kitchen",
                     policyBuilder => policyBuilder
-                        .RequireClaim("Chef"));
+                        .RequireClaim("Waiter"));
             });
         }
 
