@@ -14,16 +14,30 @@ a {
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    background-color: antiquewhite;
+    color: black;
+    border-color: #1861ac;
 }
 
+.btn-primary:hover  {
+        background: #1861ac;
+    }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.button1 {
+    background-color: antiquewhite;
+    color: black;
+    border-color: #1861ac;
+}
+
+
+.button1:hover {
+        background: #1861ac;
+    }
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -53,6 +67,9 @@ button.accept-policy {
   font-size: 1rem;
   line-height: inherit;
 }
+
+
+
 
 /* Sticky footer styles
 -------------------------------------------------- */
