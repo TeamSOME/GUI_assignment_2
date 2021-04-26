@@ -1,0 +1,81 @@
+﻿@model IEnumerable<GUI_assignment_2.Models.KitchenModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAdultsDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalKidsDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckedInAdults)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckedInKids)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RemainingAdults)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RemainingKids)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RemainingTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAdultsDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalKidsDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckedInAdults)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckedInKids)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RemainingAdults)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RemainingKids)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RemainingTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.KitchenModelID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.KitchenModelID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.KitchenModelID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

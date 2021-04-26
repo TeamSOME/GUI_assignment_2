@@ -62,47 +62,47 @@ namespace GUI_assignment_2.Controllers
         //[Authorize("Kitchen")]
         //[Authorize(Roles = "Chef")]
         //[HttpPost]
-        public async Task<IActionResult> Kitchen(string id)
-        {
-            DateTime date = Convert.ToDateTime(id);
-            var OrderModel = await _db.OrderModels.Where(a => a.Date.Date == date.Date).ToListAsync();
-            if (OrderModel == null)
-            {
-                return NotFound();
-            }
-            var totalAdultsDate = 0;
-            var totalKidsDate = 0;
-            //var total = 0;
-            var checkedInAdults = 0;
-            var checkedInKids = 0;
-            //var remainingAdults = 0;
-            //var remainingKids = 0;
-            //var remainingTotal = 0;
+        //public async Task<IActionResult> Kitchen(string id)
+        //{
+        //    DateTime date = Convert.ToDateTime(id);
+        //    var OrderModel = await _db.OrderModels.Where(a => a.Date.Date == date.Date).ToListAsync();
+        //    if (OrderModel == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var totalAdultsDate = 0;
+        //    var totalKidsDate = 0;
+        //    //var total = 0;
+        //    var checkedInAdults = 0;
+        //    var checkedInKids = 0;
+        //    //var remainingAdults = 0;
+        //    //var remainingKids = 0;
+        //    //var remainingTotal = 0;
 
-            foreach (var orderModels in OrderModel) //For hver order ligges det op
-            {
-                totalAdultsDate += orderModels.Adults;
-                checkedInAdults += orderModels.CheckedInAdults;
-                totalKidsDate += orderModels.Kids;
-                checkedInKids += orderModels.CheckedInKids;
+        //    foreach (var orderModels in OrderModel) //For hver order ligges det op
+        //    {
+        //        totalAdultsDate += orderModels.Adults;
+        //        checkedInAdults += orderModels.CheckedInAdults;
+        //        totalKidsDate += orderModels.Kids;
+        //        checkedInKids += orderModels.CheckedInKids;
 
-            }
+        //    }
 
-            var KitchenModel = new KitchenModel //sættes til lokal variabel
-            {
-                TotalAdultsDate = totalAdultsDate,  
-                TotalKidsDate = totalKidsDate,
-                Total = totalAdultsDate + totalKidsDate,
-                CheckedInAdults = checkedInAdults,
-                CheckedInKids = checkedInKids,
-                RemainingAdults = totalAdultsDate - checkedInAdults,
-                RemainingKids = totalKidsDate - checkedInKids,
-                RemainingTotal = (totalKidsDate - checkedInKids) + (totalAdultsDate - checkedInAdults),
-                Date = date.ToString("yyyy-MM-dd"),
-            };
+        //    var KitchenModel = new KitchenModel //sættes til lokal variabel
+        //    {
+        //        TotalAdultsDate = totalAdultsDate,  
+        //        TotalKidsDate = totalKidsDate,
+        //        Total = totalAdultsDate + totalKidsDate,
+        //        CheckedInAdults = checkedInAdults,
+        //        CheckedInKids = checkedInKids,
+        //        RemainingAdults = totalAdultsDate - checkedInAdults,
+        //        RemainingKids = totalKidsDate - checkedInKids,
+        //        RemainingTotal = (totalKidsDate - checkedInKids) + (totalAdultsDate - checkedInAdults),
+        //        Date = date.ToString("yyyy-MM-dd"),
+        //    };
  
-            return View(KitchenModel);
-        }
+        //    return View(KitchenModel);
+        //}
         #endregion //kitchen
 
         #region RESTAURANT

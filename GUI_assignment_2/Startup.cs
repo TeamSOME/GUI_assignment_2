@@ -50,23 +50,39 @@ namespace GUI_assignment_2
             services.AddRazorPages();   
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Restaurant", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("Restaurant", policy => policy.RequireClaim("Admin"));
 
-                options.AddPolicy("Kitchen", policy =>
-                    policy.RequireAssertion(context =>
-                                context.User.IsInRole("Admin")
-                                || context.User.IsInRole("Chef")));
+                //options.AddPolicy("Kitchen", policy =>
+                //    policy.RequireAssertion(context =>
+                //                context.User.IsInRole("Admin")
+                //                || context.User.IsInRole("Chef")));
 
-                options.AddPolicy("Reception", policy =>
-                    policy.RequireAssertion(context =>
-                                context.User.IsInRole("Admin")
-                                || context.User.IsInRole("Manager")
-                                || context.User.IsInRole("Receptionist")));
+                //options.AddPolicy("Reception", policy =>
+                //    policy.RequireAssertion(context =>
+                //                context.User.IsInRole("Admin")
+                //                || context.User.IsInRole("Manager")
+                //                || context.User.IsInRole("Receptionist")));
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    "Reception",
+                    policyBuilder => policyBuilder
+                        .RequireClaim("Receptionist"));
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    "Kitchen",
+                    policyBuilder => policyBuilder
+                        .RequireClaim("Chef"));
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -96,6 +112,9 @@ namespace GUI_assignment_2
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            DbHelper dbHelper = new DbHelper();
+            dbHelper.CreateUsers(userManager);
         }
     }
 }
