@@ -1,5 +1,10 @@
 Readme.txt
 
+
+*********************************************************************************************
+FOR AT FÅ VIST DATO BRUG GOOGLE CHROME SOM BROWSER
+
+
 Formål: Hvor meget mad der skal stilles frem
 Ting der skal være med:
 Overordnet: Login
@@ -20,3 +25,4 @@ Sikkerhed: Kun tjener kan checke ind, kun receptionen kan se det der er rettet m
 UI + UX: Touch-venlig knapper på startsiden til siderne
            For køkken: opdateres ikke automatisk så touchvenlig knap til opdatering
  
+ *********************************************************************************************

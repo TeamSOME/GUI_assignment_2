@@ -18,36 +18,7 @@ namespace GUI_assignment_2
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
-            //var host = CreateHostBuilder(args).Build();
 
-            //using (var services = host.Services.CreateScope())
-            //{
-            //    var dbContext = services.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            //    var userMgr = services.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            //    var roleMgr = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-            //    //dbContext.Database.Migrate();
-
-            //    var adminRole = new IdentityRole("Admin");
-
-            //    if (!dbContext.Roles.Any())
-            //    {
-            //        roleMgr.CreateAsync(adminRole).GetAwaiter().GetResult();
-            //    }
-
-            //    if (!dbContext.Users.Any(u => u.UserName == "admin"))
-            //    {
-            //        var adminUser = new ApplicationUser
-            //        {
-            //            FirstName = "Restaurant",
-            //            LastName = "admin@test.com"
-            //        };
-            //        var result = userMgr.CreateAsync(adminUser, "password").GetAwaiter().GetResult();
-            //        userMgr.AddToRoleAsync(adminUser, adminRole.Name).GetAwaiter().GetResult();
-            //    }
-            //}
-
-            //host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
