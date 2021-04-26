@@ -180,7 +180,7 @@ namespace GUI_assignment_2.Migrations
 
                     b.HasKey("OrderModelId");
 
-                    b.ToTable("orderModels");
+                    b.ToTable("OrderModels");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

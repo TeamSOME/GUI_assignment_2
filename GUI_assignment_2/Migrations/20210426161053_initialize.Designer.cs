@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GUI_assignment_2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210425134122_CreateMargation")]
-    partial class CreateMargation
+    [Migration("20210426161053_initialize")]
+    partial class initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -182,7 +182,7 @@ namespace GUI_assignment_2.Migrations
 
                     b.HasKey("OrderModelId");
 
-                    b.ToTable("orderModels");
+                    b.ToTable("OrderModels");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
