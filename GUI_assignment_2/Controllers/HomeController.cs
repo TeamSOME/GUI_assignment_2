@@ -107,42 +107,51 @@ namespace GUI_assignment_2.Controllers
 
         #region RESTAURANT
 
-        //[Authorize("Restaurant")]
+        [Authorize("Restaurant")]
         //[Authorize(Roles = "Admin")]
 
 
         public async Task<IActionResult> Restaurant(string id)
         {
-            var OrderModel = await _db.OrderModels.FindAsync(id);
+            var OrdderModel = await _db.OrderModels.FindAsync(id);
 
             if (id == null)
             {
                 return View(new OrderModel());
             }
-            if (OrderModel == null)
+            if (OrdderModel == null)
             {
-                return NotFound();
+                return NotFound();  
             }
 
-            return View(OrderModel);
+            return View(OrdderModel);
         }
 
-        //[Authorize("Restaurant")]
+        [Authorize("Restaurant")]
         [HttpPost]
 
         //Validation
         public async Task<IActionResult> Restaurant([Bind("RoomNumber, CheckedInAdults, CheckedInKids")] OrderModel checkedIn)
         {
-            OrderModel OrderModels;
-            OrderModels = await _db.OrderModels.Where(x => x.RoomNumber == checkedIn.RoomNumber && x.Date == DateTime.Now.Date).FirstAsync();
-            OrderModels.CheckedInAdults = checkedIn.CheckedInAdults;
-            OrderModels.CheckedInKids = checkedIn.CheckedInKids;
+            OrderModel ORderModels;
+            ORderModels = await _db.OrderModels.Where(x => x.RoomNumber == checkedIn.RoomNumber && x.Date == DateTime.Now.Date).FirstAsync();
+            ORderModels.CheckedInAdults = checkedIn.CheckedInAdults;
+            ORderModels.CheckedInKids = checkedIn.CheckedInKids;
 
             if (ModelState.IsValid)
             {
-                _db.Update(OrderModels);
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(HomeController.Index)); //Tror jeg?
+                try
+                {
+                    _db.Update(ORderModels);
+                    await _db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+
+                    throw;
+                }
+                
+                return RedirectToAction(nameof(HomeController.Index)); 
             }
 
             return View(checkedIn);
