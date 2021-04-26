@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GUI_assignment_2.Data;
 using GUI_assignment_2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GUI_assignment_2.Controllers
 {
+    [Authorize("Restaurant")]
     public class OrderModelsController : Controller
     {
         private readonly ApplicationDbContext _context;
