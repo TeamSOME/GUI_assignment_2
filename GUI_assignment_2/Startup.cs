@@ -34,7 +34,7 @@ namespace GUI_assignment_2
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             
-            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            services.AddDefaultIdentity<ApplicationUser /*IdentityRole*/>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireUppercase = false;
@@ -81,6 +81,7 @@ namespace GUI_assignment_2
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseRouting();
 

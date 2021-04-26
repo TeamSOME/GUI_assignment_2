@@ -15,7 +15,7 @@ namespace GUI_assignment_2.Controllers
 {
     public class HomeController : Controller
     {
-        //[Authorize]
+      
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
 
@@ -65,7 +65,11 @@ namespace GUI_assignment_2.Controllers
         public async Task<IActionResult> Kitchen(string id)
         {
             DateTime date = Convert.ToDateTime(id);
-            var OrderModel = await _db.OrderModels.Where(x => x.Date.Date == date.Date).ToListAsync();
+            var OrderModel = await _db.OrderModels.Where(a => a.Date.Date == date.Date).ToListAsync();
+            if (OrderModel == null)
+            {
+                return NotFound();
+            }
             var totalAdultsDate = 0;
             var totalKidsDate = 0;
             //var total = 0;
@@ -75,35 +79,30 @@ namespace GUI_assignment_2.Controllers
             //var remainingKids = 0;
             //var remainingTotal = 0;
 
-
-            var KitchenModel = new KitchenModel //sættes til lokal variabel
+            foreach (var orderModels in OrderModel) //For hver order ligges det op
             {
-                TotalAdultsDate = totalAdultsDate,
-                TotalKidsDate = totalKidsDate,
-                Total = totalAdultsDate+totalKidsDate,
-                CheckedInAdults = checkedInAdults,
-                CheckedInKids = checkedInKids,
-                RemainingAdults = totalAdultsDate- checkedInAdults,
-                RemainingKids = totalKidsDate- checkedInKids,
-                RemainingTotal = (totalKidsDate - checkedInKids)+(totalAdultsDate - checkedInAdults),
-                Date = date.ToString("g"),
-            };
-
-            foreach (var OrderModels in OrderModel) //For hver order ligges det op
-            {
-                totalAdultsDate += OrderModels.Adults;
-                checkedInAdults += OrderModels.CheckedInAdults;
-                totalKidsDate += OrderModels.Kids;
-                checkedInKids += OrderModels.CheckedInKids;
+                totalAdultsDate += orderModels.Adults;
+                checkedInAdults += orderModels.CheckedInAdults;
+                totalKidsDate += orderModels.Kids;
+                checkedInKids += orderModels.CheckedInKids;
 
             }
 
-            if (OrderModel == null)
-            { return NotFound(); }
-
+            var KitchenModel = new KitchenModel //sættes til lokal variabel
+            {
+                TotalAdultsDate = totalAdultsDate,  
+                TotalKidsDate = totalKidsDate,
+                Total = totalAdultsDate + totalKidsDate,
+                CheckedInAdults = checkedInAdults,
+                CheckedInKids = checkedInKids,
+                RemainingAdults = totalAdultsDate - checkedInAdults,
+                RemainingKids = totalKidsDate - checkedInKids,
+                RemainingTotal = (totalKidsDate - checkedInKids) + (totalAdultsDate - checkedInAdults),
+                Date = date.ToString("yyyy-MM-dd"),
+            };
+ 
             return View(KitchenModel);
         }
-
         #endregion //kitchen
 
         #region RESTAURANT
