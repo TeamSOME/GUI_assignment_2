@@ -48,11 +48,13 @@ namespace GUI_assignment_2
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();   
+            
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Restaurant", policy => policy.RequireClaim("Waiter"));
-
-                
+                options.AddPolicy(
+                    "Restaurant",
+                    policyBuilder => policyBuilder
+                        .RequireClaim("Waiter"));
             });
 
             services.AddAuthorization(options =>

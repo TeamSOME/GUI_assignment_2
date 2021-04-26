@@ -30,17 +30,17 @@ namespace GUI_assignment_2.Controllers
         {
             return View();
         }
-        //[Authorize("Reception")]
+        [Authorize("Reception")]
         public IActionResult Reception()
         {
             return View();
         }
         //[Authorize(Roles = "Chef")]
         //[Authorize("Kitchen")]
-        //public IActionResult Kitchen()
-        //{
-        //    return View();
-        //}
+        public IActionResult Kitchen()
+        {
+            return View();
+        }
         //[Authorize("Restaurant")]
         //public IActionResult Restaurant()
         //{
@@ -160,8 +160,7 @@ namespace GUI_assignment_2.Controllers
 
         #region Reception
 
-        //[Authorize("Reception")]
-        //[Authorize(Roles = "Receptionist")]
+        [Authorize("Reception")]
         [HttpPost]
         public async Task<IActionResult> Reception([Bind("RoomNumber,Date,Adults,Kids,CheckedInAdults,CheckedInKids")] OrderModel checkedIn)//Mangler det der skal bindes
         {
