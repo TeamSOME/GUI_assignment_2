@@ -1,49 +1,123 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using GUI_assignment_2.Data;
+using GUI_assignment_2.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 
 namespace GUI_assignment_2.Controllers
 {
     [Authorize(Roles = "Admin")]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class RestaurantController : ControllerBase
+    public class RolesController : Controller
     {
-        // GET: api/<RestaurantController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        public RolesController(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
-            return new string[] { "value1", "value2" };
+            _roleManager = roleManager;
+            _userManager = userManager;
+            _context = context;
         }
 
-        // GET api/<RestaurantController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Index()
         {
-            return "value";
+            var roles = _context.Roles.ToList();
+            var users = _context.Users.ToList();
+            var userRoles = _context.UserRoles.ToList();
+
+            var convertedUsers = users.Select(x => new UsersViewModel
+            {
+                Email = x.Email,
+                Roles = roles
+                    .Where(y => userRoles.Any(z => z.UserId == x.Id && z.RoleId == y.Id))
+                    .Select(y => new UsersRole
+                    {
+                        Name = y.NormalizedName
+                    })
+            });
+
+            return View(new DisplayViewModel
+            {
+                Roles = roles.Select(x => x.NormalizedName),
+                Users = convertedUsers
+            });
         }
 
-        // POST api/<RestaurantController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> CreateUser(string email)
         {
+            var user = new ApplicationUser
+            {
+                UserName = email,
+                Email = email
+            };
+
+            await _userManager.CreateAsync(user, "password");
+
+            return RedirectToAction("Index");
         }
 
-        // PUT api/<RestaurantController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost]
+        public async Task<IActionResult> CreateRole(RoleViewModel vm)
         {
+            await _roleManager.CreateAsync(new IdentityRole { Name = vm.Name });
+
+            return RedirectToAction("Index");
         }
 
-        // DELETE api/<RestaurantController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPost]
+        public async Task<IActionResult> UpdateUserRole(UpdateUserRoleViewModel vm)
         {
+            var user = await _userManager.FindByEmailAsync(vm.UserEmail);
+
+            if (vm.Delete)
+                await _userManager.RemoveFromRoleAsync(user, vm.Role);
+            else
+                await _userManager.AddToRoleAsync(user, vm.Role);
+
+            return RedirectToAction("Index");
         }
+    }
+
+    public class DisplayViewModel
+    {
+        public IEnumerable<string> Roles { get; set; }
+        public IEnumerable<UsersViewModel> Users { get; set; }
+    }
+
+    public class UsersViewModel
+    {
+        public string Email { get; set; }
+        public IEnumerable<UsersRole> Roles { get; set; }
+    }
+
+    public class UsersRole
+    {
+        public string Name { get; set; }
+    }
+
+    public class RoleViewModel
+    {
+        public string Name { get; set; }
+    }
+
+    public class UpdateUserRoleViewModel
+    {
+        public IEnumerable<UsersViewModel> Users { get; set; }
+        public IEnumerable<string> Roles { get; set; }
+
+        public string UserEmail { get; set; }
+        public string Role { get; set; }
+        public bool Delete { get; set; }
     }
 }

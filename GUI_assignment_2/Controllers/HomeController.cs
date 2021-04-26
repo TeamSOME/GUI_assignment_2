@@ -30,12 +30,12 @@ namespace GUI_assignment_2.Controllers
         {
             return View();
         }
-        [Authorize("Reception")]
+        //[Authorize("Reception")]
         public IActionResult Reception()
         {
             return View();
         }
-
+        //[Authorize(Roles = "Chef")]
         //[Authorize("Kitchen")]
         //public IActionResult Kitchen()
         //{
@@ -59,7 +59,8 @@ namespace GUI_assignment_2.Controllers
         #region ACTION------------------------------------------------------------------------------------------
 
         #region KITCHEN??? RESTAURANT???
-        [Authorize("Kitchen")]
+        //[Authorize("Kitchen")]
+        //[Authorize(Roles = "Chef")]
         //[HttpPost]
         public async Task<IActionResult> Kitchen(string id)
         {
@@ -107,7 +108,9 @@ namespace GUI_assignment_2.Controllers
 
         #region RESTAURANT
 
-        [Authorize("Restaurant")]
+        //[Authorize("Restaurant")]
+        //[Authorize(Roles = "Admin")]
+
 
         public async Task<IActionResult> Restaurant(string id)
         {
@@ -125,7 +128,7 @@ namespace GUI_assignment_2.Controllers
             return View(OrderModel);
         }
 
-        [Authorize("Restaurant")]
+        //[Authorize("Restaurant")]
         [HttpPost]
 
         //Validation
@@ -149,7 +152,8 @@ namespace GUI_assignment_2.Controllers
 
         #region Reception
 
-        [Authorize("Reception")]
+        //[Authorize("Reception")]
+        //[Authorize(Roles = "Receptionist")]
         [HttpPost]
         public async Task<IActionResult> Reception([Bind("RoomNumber,Date,Adults,Kids,CheckedInAdults,CheckedInKids")] OrderModel checkedIn)//Mangler det der skal bindes
         {

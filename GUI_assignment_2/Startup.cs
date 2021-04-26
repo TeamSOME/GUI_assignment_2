@@ -33,7 +33,8 @@ namespace GUI_assignment_2
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options =>
+            
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireUppercase = false;
@@ -43,6 +44,7 @@ namespace GUI_assignment_2
                 //options.Password.RequireNonAlphanumeric = false;
 
             })
+
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();   
@@ -84,6 +86,7 @@ namespace GUI_assignment_2
 
             app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
