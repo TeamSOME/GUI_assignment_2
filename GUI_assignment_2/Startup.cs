@@ -50,7 +50,7 @@ namespace GUI_assignment_2
             services.AddRazorPages();   
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Restaurant", policy => policy.RequireClaim("Admin"));
+                options.AddPolicy("Restaurant", policy => policy.RequireClaim("Waiter"));
 
                 
             });
@@ -68,7 +68,7 @@ namespace GUI_assignment_2
                 options.AddPolicy(
                     "Kitchen",
                     policyBuilder => policyBuilder
-                        .RequireClaim("Waiter"));
+                        .RequireClaim("Chef"));
             });
         }
 
