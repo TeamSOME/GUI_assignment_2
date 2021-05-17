@@ -97,13 +97,10 @@ namespace GUI_assignment_2.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Adults")
+                    b.Property<int>("CheckedInAdults")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Kids")
+                    b.Property<int>("CheckedInKids")
                         .HasColumnType("int");
 
                     b.Property<int>("RoomNumber")

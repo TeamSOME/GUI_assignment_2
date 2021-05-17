@@ -6,18 +6,20 @@
     <h1 class="display-4">Welcome to the hotel Baguette's breakfast portal!</h1>
 
 
-<p><br />Role: Reception Staff: - login mail: receptionist@baguettes.com  - Passkode: "hej123."<br />&emsp;&emsp;</p>
-    <button class="button1" onclick="location.href='https://localhost:44337/CheckedinModels/Index'" type="button">
+    <p><br />Role: Reception Staff: - login mail: receptionist@baguettes.com  - Passkode: "hej123."<br />&emsp;&emsp;</p>
+    <a class="btn btn-primary" type="button" asp-controller="CheckedinModels" asp-action="Index">
         &emsp;&emsp;Reception Staff&emsp;&emsp;
-    </button>
+    </a>
+
     <p><br />Role: Kitchen Staff: - login mail: chef@baguettes.com - Passkode: "hej123." <br />&emsp;&emsp;</p>
-    <button class="button1" onclick="location.href='https://localhost:44337/KitchenModels/Index'" type="button">
+    <a class="btn btn-primary" type="button" asp-controller="KitchenModels" asp-action="Index" asp-route-id="@DateTime.Now.ToString("yyyy-MM-dd")">
         &emsp;&emsp;Kitchen Staff&emsp;&emsp;
-    </button>
+    </a>
+
     <p><br />Role: Restaurant Staff: - login mail: waiter@baguettes.com - Passkode: "hej123."<br />&emsp;&emsp;</p>
-    <button class="button1" onclick="location.href='https://localhost:44337/OrderModels/Create'" type="button">
+    <a class="btn btn-primary" type="button" asp-controller="OrderModels" asp-action="Create">
         &emsp;&emsp;Restaurant Staff&emsp;&emsp;
-    </button>
+    </a>
     <p><br />&emsp;&emsp; You can also <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">click here!</a></p>
 
 </div>

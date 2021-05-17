@@ -1,13 +1,13 @@
-﻿@model IEnumerable<GUI_assignment_2.Models.CheckedInModel>
+﻿@model IEnumerable<GUI_assignment_2.Models.OrderModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Reception";
 }
 
-<h1>Index</h1>
+<h1>Reception</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
 <table class="table table-dark">
     <thead>
@@ -23,6 +23,12 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Adults)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckedInKids)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckedInAdults)
             </th>
             <th></th>
         </tr>
@@ -43,9 +49,10 @@
                 @Html.DisplayFor(modelItem => item.Adults)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CheckedInModelID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CheckedInModelID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CheckedInModelID">Delete</a>
+                @Html.DisplayFor(modelItem => item.CheckedInKids)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckedInAdults)
             </td>
         </tr>
 }

@@ -32,12 +32,11 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Okay vores tjener, receptionist og køkken skal her ind -->
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="KitchenModels" asp-action="Index"> - Kitchen - </a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="CheckedInModels" asp-action="Index"> - Reception - </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="KitchenModels" asp-action="Index" asp-route-id="@DateTime.Now.ToString("yyyy-MM-dd")"> - Kitchen - </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="OrderModels" asp-action="Create"> - Restaurant - </a>

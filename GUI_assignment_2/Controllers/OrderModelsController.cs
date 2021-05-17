@@ -21,34 +21,21 @@ namespace GUI_assignment_2.Controllers
             _context = context;
         }
 
-        // GET: OrderModels
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.OrderModels.ToListAsync());
-        }
-
-        // GET: OrderModels/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: OrderModels/Create
+        public async Task<IActionResult> Create(long? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return View(new CheckedInModel());
             }
 
-            var orderModel = await _context.OrderModels
-                .FirstOrDefaultAsync(m => m.OrderModelId == id);
-            if (orderModel == null)
+            var newOrder = await _context.OrderModels.FindAsync(id);
+            if (newOrder == null)
             {
                 return NotFound();
             }
 
-            return View(orderModel);
-        }
-
-        // GET: OrderModels/Create
-        public IActionResult Create()
-        {
-            return View();
+            return View(newOrder);
         }
 
         // POST: OrderModels/Create
@@ -56,100 +43,31 @@ namespace GUI_assignment_2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderModelId,RoomNumber,Date,Adults,Kids,CheckedInAdults,CheckedInKids")] OrderModel orderModel)
+        public async Task<IActionResult> Create([Bind("RoomNumber,CheckedInAdults,CheckedInKids")] CheckedInModel checkedInOrder)
         {
+            OrderModel newOrder;
+
+            try
+            {
+                newOrder = await _context.OrderModels.Where(p => p.RoomNumber == checkedInOrder.RoomNumber).FirstAsync();
+            }
+            catch
+            {
+                ModelState.AddModelError("RoomNumber","This room is not occupied");
+                return View(checkedInOrder);
+            }
+
+            newOrder.CheckedInAdults = checkedInOrder.CheckedInAdults;
+            newOrder.CheckedInKids = checkedInOrder.CheckedInKids;
+
+
             if (ModelState.IsValid)
             {
-                _context.Add(orderModel);
+                _context.Update(newOrder);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
-            return View(orderModel);
-        }
-
-        // GET: OrderModels/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var orderModel = await _context.OrderModels.FindAsync(id);
-            if (orderModel == null)
-            {
-                return NotFound();
-            }
-            return View(orderModel);
-        }
-
-        // POST: OrderModels/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderModelId,RoomNumber,Date,Adults,Kids,CheckedInAdults,CheckedInKids")] OrderModel orderModel)
-        {
-            if (id != orderModel.OrderModelId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(orderModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!OrderModelExists(orderModel.OrderModelId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(orderModel);
-        }
-
-        // GET: OrderModels/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var orderModel = await _context.OrderModels
-                .FirstOrDefaultAsync(m => m.OrderModelId == id);
-            if (orderModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(orderModel);
-        }
-
-        // POST: OrderModels/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var orderModel = await _context.OrderModels.FindAsync(id);
-            _context.OrderModels.Remove(orderModel);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool OrderModelExists(int id)
-        {
-            return _context.OrderModels.Any(e => e.OrderModelId == id);
+            return View(checkedInOrder);
         }
     }
 }

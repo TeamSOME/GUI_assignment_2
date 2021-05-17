@@ -17,7 +17,9 @@ namespace GUI_assignment_2.Models
         public DateTime Date { get; set; }//Bindes til Reception
         public int Adults { get; set; } = 0; //Bindes til Reception
         public int Kids { get; set; } = 0; //Bindes til Reception
+        [Display(Name = "Adults Checked In")]
         public int CheckedInAdults { get; set; } = 0;//Bindes til Restaurant og til reception
+        [Display(Name = "Kids Checked In")]
         public int CheckedInKids { get; set; } = 0;//Bindes til Restaurant og til reception
 
     }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GUI_assignment_2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210426175323_Initialize")]
+    [Migration("20210517131804_Initialize")]
     partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,13 +99,10 @@ namespace GUI_assignment_2.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Adults")
+                    b.Property<int>("CheckedInAdults")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Kids")
+                    b.Property<int>("CheckedInKids")
                         .HasColumnType("int");
 
                     b.Property<int>("RoomNumber")

@@ -24,25 +24,7 @@ namespace GUI_assignment_2.Controllers
         // GET: CheckedInModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CheckedInModels.ToListAsync());
-        }
-
-        // GET: CheckedInModels/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var checkedInModel = await _context.CheckedInModels
-                .FirstOrDefaultAsync(m => m.CheckedInModelID == id);
-            if (checkedInModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(checkedInModel);
+            return View(await _context.OrderModels.ToListAsync());
         }
 
         // GET: CheckedInModels/Create
@@ -56,100 +38,15 @@ namespace GUI_assignment_2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CheckedInModelID,Date,RoomNumber,Kids,Adults")] CheckedInModel checkedInModel)
+        public async Task<IActionResult> Create([Bind("RoomNumber,Date,Adults,Kids,CheckedInAdults,CheckedInKids")] OrderModel orderModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(checkedInModel);
+                _context.Add(orderModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(checkedInModel);
-        }
-
-        // GET: CheckedInModels/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var checkedInModel = await _context.CheckedInModels.FindAsync(id);
-            if (checkedInModel == null)
-            {
-                return NotFound();
-            }
-            return View(checkedInModel);
-        }
-
-        // POST: CheckedInModels/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CheckedInModelID,Date,RoomNumber,Kids,Adults")] CheckedInModel checkedInModel)
-        {
-            if (id != checkedInModel.CheckedInModelID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(checkedInModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CheckedInModelExists(checkedInModel.CheckedInModelID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(checkedInModel);
-        }
-
-        // GET: CheckedInModels/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var checkedInModel = await _context.CheckedInModels
-                .FirstOrDefaultAsync(m => m.CheckedInModelID == id);
-            if (checkedInModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(checkedInModel);
-        }
-
-        // POST: CheckedInModels/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var checkedInModel = await _context.CheckedInModels.FindAsync(id);
-            _context.CheckedInModels.Remove(checkedInModel);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool CheckedInModelExists(int id)
-        {
-            return _context.CheckedInModels.Any(e => e.CheckedInModelID == id);
+            return View(orderModel);
         }
     }
 }
